@@ -345,10 +345,6 @@ class HuffmanTest(unittest.TestCase):
         self.assertEqual(array_list.get(my_array, ord('b')), 3)
         self.assertEqual(array_list.get(my_array, ord(' ')), 3)
 
-    def test_count2(self):
-        file_name = 'none.txt'
-        self.assertRaises(FileNotFoundError, count_occurrence, file_name)
-
     def test_leaf1(self):
         my_leaf = Leaf(97, 3)
         self.assertEqual(repr(my_leaf), '(Leaf: a, 3)')
@@ -475,8 +471,8 @@ class HuffmanTest(unittest.TestCase):
         huffman_decode('outputtest.txt', 'decodetest.txt')
 
     def test_huff_encode_decode5(self):
-        self.assertEqual(huffman_encode('big_test1.txt', 'outputtest.txt'), None)
-        self.assertEqual(huffman_decode('outputtest1.txt', 'decodetest.txt'), None)
+        self.assertEqual(huffman_encode('fake.txt', 'outputtest.txt'), None)
+        self.assertEqual(huffman_decode('notreal.txt', 'decodetest.txt'), None)
 
     def test_huffman_io_byte(self):
         hbw = HuffmanBitsWriter('huffman_io_test.bin')
