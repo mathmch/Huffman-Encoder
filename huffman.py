@@ -25,8 +25,6 @@ def gen_256_list():
 # takes in a file name and counts the occurrence of each character in a text file, returns the frequency of each
 # character in the list
 def count_occurrence(file_name):
-    if not check_file(file_name):
-        raise FileNotFoundError
     f = open(file_name, 'r')
     file_string = f.read()
     my_array = gen_256_list()
