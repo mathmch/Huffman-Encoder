@@ -316,14 +316,14 @@ def huffman_decode(input_file, output_file):
         freq = hb_reader.read_int()
         occurrence_array = array_list.set(occurrence_array, ascii_val, freq)
     huff_tree = build_tree(occurrence_array)
-    f = open(output_file, 'wb')
+    f = open(output_file, 'w', newline='\n')
     if huff_tree is None:
         hb_reader.close()
         f.close()
         return None
     for i in range(huff_tree.freq):
         val = traverse(huff_tree, hb_reader)
-        f.write(val.encode())
+        f.write(val)
     f.close()
     hb_reader.close()
     return None
@@ -453,6 +453,11 @@ class HuffmanTest(unittest.TestCase):
         code_array = gen_code(my_tree, gen_256_list())
         my_string = generate_string(file_name, code_array)
         self.assertEqual(my_string, '11011011000011011010011010011')
+
+    def test_count_code(self):
+        my_list = gen_256_list()
+        count = count_codes(my_list)
+        self.assertEqual(count, 0)
 
     def test_huff_encode_decode1(self):
         huffman_encode('example.txt', 'output.bin')
