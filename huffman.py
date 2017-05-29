@@ -289,7 +289,7 @@ def huffman_encode(input_file, output_file):
             hb_writer.write_int(occurrence_array.a_list[i])
     hb_writer.write_code(encoded_string)
     hb_writer.close()
-    return None
+    return traverse_tree_char(huff_tree)
 
 # fileObj HuffmanTree -> string
 # reads bits from the file and traverses the tree to get to a leaf, returns leaf value
@@ -460,23 +460,28 @@ class HuffmanTest(unittest.TestCase):
         self.assertEqual(count, 0)
 
     def test_huff_encode_decode1(self):
-        huffman_encode('example.txt', 'output.bin')
+        a = huffman_encode('example.txt', 'output.bin')
         huffman_decode('output.bin', 'decode.txt')
+        self.assertEqual(a, ' bdca')
 
     def test_huff_encode_decode2(self):
-        huffman_encode('1.txt', 'output1.bin')
+        a = huffman_encode('1.txt', 'output1.bin')
         huffman_decode('output1.bin', 'decode1.txt')
+        self.assertEqual(a, 'a')
 
     def test_huff_encode_decode3(self):
-        huffman_encode('empty.txt', 'outputempty.bin')
+        a = huffman_encode('empty.txt', 'outputempty.bin')
         huffman_decode('outputempty.bin', 'decodeempty.txt')
+        self.assertEqual(a, '')
 
     def test_huff_encode_decode4(self):
-        huffman_encode('big_test.txt', 'outputbig.bin')
+        a = huffman_encode('big_test.txt', 'outputbig.bin')
         huffman_decode('outputbig.bin', 'decodebig.txt')
+        self.assertEqual(a, 'fy\n4367eqthgdrwas')
 
     def test_huff_encode_decode5(self):
-        self.assertEqual(huffman_encode('fake.txt', 'outputtest.bin'), None)
+        s = huffman_encode('fake.txt', 'outputtest.bin')
+        self.assertEqual(s, None)
         self.assertEqual(huffman_decode('notreal.bin', 'decodetest.txt'), None)
 
     def test_huffman_io_byte(self):
