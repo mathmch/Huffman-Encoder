@@ -316,14 +316,14 @@ def huffman_decode(input_file, output_file):
         freq = hb_reader.read_int()
         occurrence_array = array_list.set(occurrence_array, ascii_val, freq)
     huff_tree = build_tree(occurrence_array)
-    f = open(output_file, 'w')
+    f = open(output_file, 'wb')
     if huff_tree is None:
         hb_reader.close()
         f.close()
         return None
     for i in range(huff_tree.freq):
         val = traverse(huff_tree, hb_reader)
-        f.write(val)
+        f.write(val.encode())
     f.close()
     hb_reader.close()
     return None
@@ -455,24 +455,24 @@ class HuffmanTest(unittest.TestCase):
         self.assertEqual(my_string, '11011011000011011010011010011')
 
     def test_huff_encode_decode1(self):
-        huffman_encode('example.txt', 'output.txt')
-        huffman_decode('output.txt', 'decode.txt')
+        huffman_encode('example.txt', 'output.bin')
+        huffman_decode('output.bin', 'decode.txt')
 
     def test_huff_encode_decode2(self):
-        huffman_encode('1.txt', 'output1.txt')
-        huffman_decode('output1.txt', 'decode1.txt')
+        huffman_encode('1.txt', 'output1.bin')
+        huffman_decode('output1.bin', 'decode1.txt')
 
     def test_huff_encode_decode3(self):
-        huffman_encode('empty.txt', 'outputempty.txt')
-        huffman_decode('outputempty.txt', 'decodeempty.txt')
+        huffman_encode('empty.txt', 'outputempty.bin')
+        huffman_decode('outputempty.bin', 'decodeempty.txt')
 
     def test_huff_encode_decode4(self):
-        huffman_encode('big_test.txt', 'outputtest.txt')
-        huffman_decode('outputtest.txt', 'decodetest.txt')
+        huffman_encode('big_test.txt', 'outputbig.bin')
+        huffman_decode('outputbig.bin', 'decodebig.txt')
 
     def test_huff_encode_decode5(self):
-        self.assertEqual(huffman_encode('fake.txt', 'outputtest.txt'), None)
-        self.assertEqual(huffman_decode('notreal.txt', 'decodetest.txt'), None)
+        self.assertEqual(huffman_encode('fake.txt', 'outputtest.bin'), None)
+        self.assertEqual(huffman_decode('notreal.bin', 'decodetest.txt'), None)
 
     def test_huffman_io_byte(self):
         hbw = HuffmanBitsWriter('huffman_io_test.bin')
