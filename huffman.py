@@ -1,7 +1,9 @@
 import array_list
 import linked_list
 import sys
-sys.setrecursionlimit(8000)
+import unittest
+import struct
+sys.setrecursionlimit(10000)
 
 # string -> boolean
 # takes a file name, returns true if the file exists and can be read, false otherwise
@@ -183,9 +185,6 @@ def count_codes(lst):
 #   2017-04-30 - D. Koller
 #
 
-import unittest
-import struct
-
 
 # --------------------------------------------------------------------
 # HuffmanBitsWriter is a HuffmanBitsWriter(string)
@@ -316,14 +315,14 @@ def huffman_decode(input_file, output_file):
         freq = hb_reader.read_int()
         occurrence_array = array_list.set(occurrence_array, ascii_val, freq)
     huff_tree = build_tree(occurrence_array)
-    f = open(output_file, 'w', newline='\n')
+    f = open(output_file, 'wb')
     if huff_tree is None:
         hb_reader.close()
         f.close()
         return None
     for i in range(huff_tree.freq):
         val = traverse(huff_tree, hb_reader)
-        f.write(val)
+        f.write(val.encode())
     f.close()
     hb_reader.close()
     return None
