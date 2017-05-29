@@ -183,6 +183,9 @@ def count_codes(lst):
 # string string -> None
 # Takes the names of two files and writes the huffman encoded version of the input file to the output w/ a decode header
 def huffman_encode(input_file, output_file):
+    if not check_file(input_file):
+        print('Invalid Encode File')
+        return None
     occurrence_array = count_occurrence(input_file)
     huff_tree = build_tree(occurrence_array)
     huff_codes = gen_code(huff_tree, gen_256_list())
@@ -212,6 +215,9 @@ def traverse(huff_tree, file_obj):
 # string string -> None
 # Takes a compressed file and an output file, decompresses the file and writes it to the output file
 def huffman_decode(input_file, output_file):
+    if not check_file(input_file):
+        print('Invalid Decode File')
+        return None
     hb_reader = HuffmanBitsReader(input_file)
     num_codes = hb_reader.read_byte()
     occurrence_array = gen_256_list()
@@ -337,12 +343,6 @@ class HuffmanTest(unittest.TestCase):
         my_array = count_occurrence(file_name)
         my_tree = build_tree(my_array)
         code_array = gen_code(my_tree, gen_256_list())
-        test_array = array_list.List([HuffCode(32, '00'),
-                                      HuffCode(98, '01'),
-                                      HuffCode(100, '100'),
-                                      HuffCode(99, '101'),
-                                      HuffCode(97, '11'),
-                                      None, None, None, None, None], 5, 10)
         self.assertEqual(array_list.get(code_array, 32), HuffCode(32, '00'))
         self.assertEqual(array_list.get(code_array, 100), HuffCode(100, '100'))
 
@@ -383,6 +383,11 @@ class HuffmanTest(unittest.TestCase):
     def test_huff_encode_decode4(self):
         huffman_encode('big_test.txt', 'outputtest.txt')
         huffman_decode('outputtest.txt', 'decodetest.txt')
+
+    def test_huff_encode_decode5(self):
+        self.assertEqual(huffman_encode('big_test1.txt', 'outputtest.txt'), None)
+        self.assertEqual(huffman_decode('outputtest1.txt', 'decodetest.txt'), None)
+
 
 
 if __name__ == '__main__':
