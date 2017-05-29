@@ -1,6 +1,8 @@
 import array_list
 import linked_list
 from huffman_bits_io import *
+import sys
+sys.setrecursionlimit(6000)
 
 # string -> boolean
 # takes a file name, returns true if the file exists and can be read, false otherwise
