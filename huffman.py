@@ -194,7 +194,6 @@ def huffman_encode(input_file, output_file):
             hb_writer.write_int(occurrence_array.a_list[i])
     hb_writer.write_code(encoded_string)
     hb_writer.close()
-    print(huff_tree)
     return traverse_tree_char(huff_tree)
 
 # fileObj HuffmanTree -> string
@@ -350,7 +349,6 @@ class HuffmanTest(unittest.TestCase):
         my_array = count_occurrence(file_name)
         my_tree = build_tree(my_array)
         code_array = gen_code(my_tree, gen_256_list())
-        print(code_array)
         self.assertEqual(array_list.get(code_array, 97), HuffCode(97, ''))
 
     def test_gen_string1(self):
