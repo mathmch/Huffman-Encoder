@@ -182,11 +182,15 @@ def huffman_encode(input_file, output_file):
         print('Invalid Encode File')
         return None
     occurrence_array = count_occurrence(input_file)
+    hb_writer = HuffmanBitsWriter(output_file)
     huff_tree = build_tree(occurrence_array)
     huff_codes = gen_code(huff_tree, gen_256_list())
     num_codes = count_codes(huff_codes)
-    encoded_string = generate_string(input_file, huff_codes)
+    if num_codes == 0:
+        hb_writer.write_byte(num_codes)
+        return ''
     hb_writer = HuffmanBitsWriter(output_file)
+    encoded_string = generate_string(input_file, huff_codes)
     hb_writer.write_byte(num_codes)
     for i in range(256):
         if occurrence_array.a_list[i] != 0:
