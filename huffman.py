@@ -100,13 +100,11 @@ def traverse_tree_char(tree, my_string = ''):
 # HuffmanTree HuffmanTree -> boolean
 # Returns true if the first HuffmanTree comes before the second one
 def comes_before(a, b):
-    if b is None:
-        return True
     if a.freq < b.freq:
         return True
-    if a.freq == b.freq:
-        return a.ascii_rep < b.ascii_rep
-    return False
+    if b.freq < a.freq:
+        return False
+    return a.ascii_rep < b.ascii_rep
 
 # ArrayList -> LinkedList
 # Returns a LinkedList in sorted order of every character that appears in the ArrayList
@@ -131,7 +129,10 @@ def build_tree(lst):
     while (sorted_list.rest != None):
         leaf0, sorted_list = linked_list.remove(sorted_list, 0)
         leaf1, sorted_list = linked_list.remove(sorted_list, 0)
-        node = Node(leaf0.ascii_rep, leaf0.freq + leaf1.freq, leaf0, leaf1)
+        if leaf0.ascii_rep < leaf1.ascii_rep:
+            node = Node(leaf0.ascii_rep, leaf0.freq + leaf1.freq, leaf0, leaf1)
+        if leaf1.ascii_rep < leaf0.ascii_rep:
+            node = Node(leaf1.ascii_rep, leaf0.freq + leaf1.freq, leaf0, leaf1)
         sorted_list = linked_list.insert_sorted(sorted_list, node, comes_before)
     return sorted_list.first
 
@@ -277,7 +278,6 @@ class HuffmanTest(unittest.TestCase):
         my_leaf = Leaf(97, 3)
         my_leaf1 = Leaf(98, 3)
         self.assertTrue(comes_before(my_leaf, my_leaf1))
-        self.assertTrue(comes_before(my_leaf1, None))
 
     def test_insert_sorted1(self):
         my_list = linked_list.Pair(Leaf(99, 1),
@@ -310,8 +310,8 @@ class HuffmanTest(unittest.TestCase):
                          Node(32, 6,
                               Leaf(32, 3),
                               Leaf(98, 3)),
-                         Node(100, 7,
-                              Node(100, 3,
+                         Node(97, 7,
+                              Node(99, 3,
                                    Leaf(100, 1),
                                    Leaf(99, 2)),
                               Leaf(97, 4)))
@@ -379,12 +379,17 @@ class HuffmanTest(unittest.TestCase):
     def test_huff_encode_decode4(self):
         a = huffman_encode('big_test.txt', 'outputbig.bin')
         huffman_decode('outputbig.bin', 'decodebig.txt')
-        self.assertEqual(a, 'fy\n4367eqthgdrwas')
+        self.assertEqual(a, 'af4367eqthgrwy\nds')
 
     def test_huff_encode_decode5(self):
         s = huffman_encode('fake.txt', 'outputtest.bin')
         self.assertEqual(s, None)
         self.assertEqual(huffman_decode('notreal.bin', 'decodetest.txt'), None)
+
+    def test_huff_encode_decode6(self):
+        s = huffman_encode('new.txt', 'outputnew.bin')
+        self.assertEqual(s, 'a!,cbd.')
+        self.assertEqual(huffman_decode('outputnew.bin', 'decodenew.txt'), None)
 
 if __name__ == '__main__':
     unittest.main()
