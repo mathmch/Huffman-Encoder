@@ -139,16 +139,8 @@ def get(array_list, index):
 def set(array_list, index, value):
     if index >= array_list.size or index < 0:
         raise IndexError()
-    new_list = empty_list()
-    if new_list.capacity != array_list.capacity:
-        new_list = equalize_list(array_list, new_list)
-    for idx in range(array_list.size):
-        new_list.a_list[idx] = array_list.a_list[idx]
-        new_list.size += 1
-        if index == 0:
-            new_list.a_list[idx] = value
-        index = index-1
-    return new_list
+    array_list.a_list[index] = value
+    return array_list
 
 
 # List int -> (value, List)

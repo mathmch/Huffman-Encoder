@@ -17,9 +17,7 @@ def check_file(file_name):
 # -> ArrayList
 # Returns a blank ArrayList of size 256
 def gen_256_list():
-    my_array = array_list.empty_list()
-    for i in range(256):
-        my_array = array_list.add(my_array, i, 0)
+    my_array = array_list.List([0]*256, 256, 256)
     return my_array
 
 # string -> list
