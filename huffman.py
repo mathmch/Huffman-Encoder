@@ -142,9 +142,6 @@ def gen_code(huff_tree, lst, code = ''):
         return None
     if type(huff_tree) == Leaf:
         lst = array_list.set(lst, huff_tree.ascii_rep, HuffCode(huff_tree.ascii_rep, code))
-    if type(huff_tree) != Leaf and huff_tree.right is None:
-        lst = gen_code(huff_tree.left, lst, code + '0')
-        return lst
     if type(huff_tree) != Leaf:
         lst = gen_code(huff_tree.left, lst, code + '0')
         lst = gen_code(huff_tree.right, lst, code + '1')
