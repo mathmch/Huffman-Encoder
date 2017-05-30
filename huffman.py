@@ -219,10 +219,7 @@ def huffman_decode(input_file, output_file):
     hb_reader = HuffmanBitsReader(input_file)
     num_codes = hb_reader.read_byte()
     occurrence_array = gen_256_list()
-    print(input_file)
-    print(num_codes)
     for i in range(num_codes):
-        print('got here')
         ascii_val = hb_reader.read_byte()
         freq = hb_reader.read_int()
         occurrence_array = array_list.set(occurrence_array, ascii_val, freq)
