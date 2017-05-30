@@ -188,6 +188,7 @@ def huffman_encode(input_file, output_file):
     num_codes = count_codes(huff_codes)
     if num_codes == 0:
         hb_writer.write_byte(0)
+        hb_writer.close()
         return ''
     encoded_string = generate_string(input_file, huff_codes)
     hb_writer.write_byte(num_codes)
