@@ -1,7 +1,6 @@
 import array_list
 import linked_list
 import sys
-import unittest
 from huffman_bits_io import *
 sys.setrecursionlimit(10000)
 
@@ -119,9 +118,8 @@ def list_to_leafs(lst):
     leaf_list = linked_list.empty_list()
     for i in range(256):
         if lst.a_list[i] != 0:
-            leaf_list = linked_list.add(leaf_list, linked_list.length(leaf_list), Leaf(i, lst.a_list[i]))
-    sorted_leaf_list = linked_list.sort(leaf_list, comes_before)
-    return sorted_leaf_list
+            leaf_list = linked_list.insert_sorted(leaf_list, Leaf(i, lst.a_list[i]), comes_before)
+    return leaf_list
 
 # ArrayList -> HuffmanTree
 # Takes in an ArrayList representing every character in the file, returns a HuffmanTree
