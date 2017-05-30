@@ -127,7 +127,7 @@ def build_tree(lst):
         return None
     if sorted_list.rest is None:
         leaf0, sorted_list = linked_list.remove(sorted_list, 0)
-        return Node(leaf0.ascii_rep, leaf0.freq, leaf0, None)
+        return leaf0
     while (sorted_list.rest != None):
         leaf0, sorted_list = linked_list.remove(sorted_list, 0)
         leaf1, sorted_list = linked_list.remove(sorted_list, 0)
@@ -186,10 +186,6 @@ def huffman_encode(input_file, output_file):
     huff_tree = build_tree(occurrence_array)
     huff_codes = gen_code(huff_tree, gen_256_list())
     num_codes = count_codes(huff_codes)
-    if num_codes == 0:
-        hb_writer.write_byte(0)
-        hb_writer.close()
-        return ''
     encoded_string = generate_string(input_file, huff_codes)
     hb_writer.write_byte(num_codes)
     for i in range(256):
@@ -198,6 +194,7 @@ def huffman_encode(input_file, output_file):
             hb_writer.write_int(occurrence_array.a_list[i])
     hb_writer.write_code(encoded_string)
     hb_writer.close()
+    print(huff_tree)
     return traverse_tree_char(huff_tree)
 
 # fileObj HuffmanTree -> string
@@ -353,7 +350,8 @@ class HuffmanTest(unittest.TestCase):
         my_array = count_occurrence(file_name)
         my_tree = build_tree(my_array)
         code_array = gen_code(my_tree, gen_256_list())
-        self.assertEqual(array_list.get(code_array, 97), HuffCode(97, '0'))
+        print(code_array)
+        self.assertEqual(array_list.get(code_array, 97), HuffCode(97, ''))
 
     def test_gen_string1(self):
         file_name = 'example.txt'
