@@ -29,7 +29,7 @@ def count_occurrence(file_name):
     my_array = gen_256_list()
     for elm in file_string:
         location_val = array_list.get(my_array, ord(elm)) + 1
-        my_array = array_list.set(my_array, ord(elm), location_val)
+        array_list.set(my_array, ord(elm), location_val)
     f.close()
     return my_array
 
